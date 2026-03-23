@@ -2,9 +2,9 @@
 name: User Story
 about: A small, valuable piece of functionality from a user perspective
 title: "[USER STORY]: "
-type: "user_story"
-labels: "user-story"
-assignees: ""
+labels: ''
+assignees: ''
+
 ---
 
 ## 📌 Story
