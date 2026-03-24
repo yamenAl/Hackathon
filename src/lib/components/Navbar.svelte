@@ -136,4 +136,264 @@ function closeMenu() {
     </ul>
     </div>
 </nav> 
-  
+<style>
+  /* ── Google Fonts ─────────────────────────────────────────
+     Audiowide = futuristic display font used throughout the navbar
+  ── */
+  @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+  /* ── Design tokens ────────────────────────────────────────
+     All colours, sizes and fonts in one place.
+  ── */
+  :root {
+    --nav-height:    60px;
+    --nav-bg:        rgba(4, 6, 20, 0.85);
+    --nav-border:    rgba(120, 80, 255, 0.2);
+    --color-accent:  #7c5cfc;
+    --color-accent2: #38bdf8;
+    --color-text:    #dde4f0;
+    --color-muted:   #6b7a99;
+    --font-main:     'Audiowide', sans-serif; /* used everywhere in the navbar */
+  }
+
+  /* ══════════════════════════════════════════
+     MOBILE FIRST — base styles are for mobile
+     Desktop overrides come at the bottom
+  ══════════════════════════════════════════ */
+
+  /* ── Navbar bar ───────────────────────────────────────────
+     Fixed to the top, full width, glassmorphism effect.
+  ── */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    padding: 0 1.25rem;
+    gap: 1rem;
+
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  /* ── Brand / Logo ─────────────────────────────────────────*/
+  .navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .navbar__logo {
+    width: 28px;
+    height: 28px;
+    color: var(--color-accent);
+    animation: spin 12s linear infinite;
+    filter: drop-shadow(0 0 5px var(--color-accent));
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .navbar__brand-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    font-family: var(--font-main);
+    user-select: none;
+  }
+
+  .navbar__brand-top {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    text-shadow: 0 0 10px rgba(124, 92, 252, 0.6);
+  }
+
+  .navbar__brand-bottom {
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    color: var(--color-accent2);
+    opacity: 0.85;
+  }
+
+  /* ── Desktop nav links ────────────────────────────────────
+     MOBILE: hidden — links live inside the mobile dropdown.
+     DESKTOP: overridden to display:flex at the bottom.
+  ── */
+  .navbar__links {
+    display: none;
+    list-style: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .navbar__link {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    font-family: var(--font-main);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 160ms ease, background 160ms ease;
+  }
+
+  .navbar__link:hover,
+  .navbar__link--active {
+    color: var(--color-text);
+    background: rgba(124, 92, 252, 0.1);
+  }
+
+  .navbar__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* ── Hamburger button ─────────────────────────────────────
+     MOBILE: visible by default.
+     DESKTOP: overridden to display:none at the bottom.
+  ── */
+  .navbar__hamburger {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 38px;
+    height: 38px;
+    padding: 7px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 160ms;
+  }
+
+  .navbar__hamburger:hover {
+    background: rgba(124, 92, 252, 0.12);
+  }
+
+  .navbar__hamburger:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .navbar__bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    transform-origin: center;
+    transition: transform 280ms ease, opacity 280ms ease;
+  }
+
+  /* Middle bar shorter for visual detail */
+  .navbar__bar:nth-child(2) {
+    width: 65%;
+    align-self: flex-end;
+  }
+
+  /* Bars animate into × when menu is open */
+  .navbar__hamburger--open .navbar__bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .navbar__hamburger--open .navbar__bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .navbar__hamburger--open .navbar__bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── Mobile dropdown menu ─────────────────────────────────
+     MOBILE: visible (display:block), expands via max-height.
+     DESKTOP: overridden to display:none at the bottom.
+  ── */
+  .navbar__mobile {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    z-index: 99;
+    display: block;
+
+    background: rgba(4, 6, 20, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--nav-border);
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 320ms ease;
+  }
+
+  .navbar__mobile--open {
+    max-height: 400px;
+  }
+
+  .navbar__mobile-links {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar__mobile-link {
+    display: block;
+    padding: 0.85rem 0;
+    font-family: var(--font-main); /* Audiowide here too */
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(120, 80, 255, 0.08);
+    transition: color 160ms, padding-left 160ms;
+  }
+
+  .navbar__mobile-link:hover {
+    color: var(--color-text);
+    padding-left: 0.5rem;
+  }
+
+  .navbar__mobile-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* ══════════════════════════════════════════
+     DESKTOP OVERRIDES — min-width: 768px
+  ══════════════════════════════════════════ */
+  @media (min-width: 768px) {
+    /* Show the inline link list */
+    .navbar__links {
+      display: flex;
+    }
+
+    /* Hide the hamburger button */
+    .navbar__hamburger {
+      display: none;
+    }
+
+    /* Hide the mobile dropdown */
+    .navbar__mobile {
+      display: none;
+    }
+  }
+</style>
