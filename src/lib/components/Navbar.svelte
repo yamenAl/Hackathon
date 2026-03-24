@@ -117,12 +117,13 @@ function closeMenu() {
     </ul>
     </div>
 </nav> 
+ 
 <style>
   /* ── Google Fonts ─────────────────────────────────────────
      Audiowide = futuristic display font used throughout the navbar
   ── */
   @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
-
+ 
   /* ── Design tokens ────────────────────────────────────────
      All colours, sizes and fonts in one place.
   ── */
@@ -134,55 +135,56 @@ function closeMenu() {
     --color-accent2: #38bdf8;
     --color-text:    #dde4f0;
     --color-muted:   #6b7a99;
-    --font-main:     'Audiowide', sans-serif; /* used everywhere in the navbar */
+    --font-main:     'Audiowide', sans-serif;
   }
-
-  /* ══════════════════════════════════════════
-     MOBILE FIRST — base styles are for mobile
-     Desktop overrides come at the bottom
-  ══════════════════════════════════════════ */
-
-  /* ── Navbar bar ───────────────────────────────────────────
-     Fixed to the top, full width, glassmorphism effect.
-  ── */
+ 
+  /* ════════════════════════════════════════════════════════
+     MOBILE FIRST — base styles (< 480px)
+     Everything here is the smallest screen size.
+     Larger screens override below.
+  ════════════════════════════════════════════════════════ */
+ 
+  /* ── Navbar bar ─────────────────────────────────────────── */
   .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-
+ 
     display: flex;
     align-items: center;
     height: var(--nav-height);
-    padding: 0 1.25rem;
-    gap: 1rem;
-
+    /* Tight padding on small mobile screens */
+    padding: 0 1rem;
+    gap: 0.75rem;
+ 
     background: var(--nav-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--nav-border);
   }
-
-  /* ── Brand / Logo ─────────────────────────────────────────*/
+ 
+  /* ── Brand / Logo ─────────────────────────────────────── */
   .navbar__brand {
     display: flex;
     align-items: center;
     text-decoration: none;
     flex-shrink: 0;
   }
-
-.navbar__brand :global(.logo-icon) {
-  width: 180px;
-  height: auto;
-  display: block;
-  flex-shrink: 0;
-  margin-top: 10px;
-}
-
+ 
+  /* Logo slightly smaller on small mobile */
+  .navbar__brand :global(.logo-icon) {
+    width: 140px;
+    height: auto;
+    display: block;
+    flex-shrink: 0;
+    margin-top: 10px;
+  }
+ 
   /* ── Desktop nav links ────────────────────────────────────
-     MOBILE: hidden — links live inside the mobile dropdown.
-     DESKTOP: overridden to display:flex at the bottom.
+     Hidden on mobile and tablet by default.
+     Shown on desktop (≥ 1024px) via media query below.
   ── */
   .navbar__links {
     display: none;
@@ -192,7 +194,7 @@ function closeMenu() {
     align-items: center;
     gap: 0.25rem;
   }
-
+ 
   .navbar__link {
     display: block;
     padding: 0.4rem 0.75rem;
@@ -205,21 +207,21 @@ function closeMenu() {
     border-radius: 4px;
     transition: color 160ms ease, background 160ms ease;
   }
-
+ 
   .navbar__link:hover,
   .navbar__link--active {
     color: var(--color-text);
     background: rgba(124, 92, 252, 0.1);
   }
-
+ 
   .navbar__link:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
   }
-
+ 
   /* ── Hamburger button ─────────────────────────────────────
-     MOBILE: visible by default.
-     DESKTOP: overridden to display:none at the bottom.
+     Visible on mobile and tablet by default.
+     Hidden on desktop (≥ 1024px) via media query below.
   ── */
   .navbar__hamburger {
     margin-left: auto;
@@ -236,16 +238,16 @@ function closeMenu() {
     border-radius: 6px;
     transition: background 160ms;
   }
-
+ 
   .navbar__hamburger:hover {
     background: rgba(124, 92, 252, 0.12);
   }
-
+ 
   .navbar__hamburger:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
-
+ 
   .navbar__bar {
     display: block;
     width: 100%;
@@ -255,13 +257,13 @@ function closeMenu() {
     transform-origin: center;
     transition: transform 280ms ease, opacity 280ms ease;
   }
-
-  /* Middle bar shorter for visual detail */
+ 
+  /* Middle bar slightly shorter for visual detail */
   .navbar__bar:nth-child(2) {
     width: 65%;
     align-self: flex-end;
   }
-
+ 
   /* Bars animate into × when menu is open */
   .navbar__hamburger--open .navbar__bar:nth-child(1) {
     transform: translateY(6.5px) rotate(45deg);
@@ -273,10 +275,11 @@ function closeMenu() {
   .navbar__hamburger--open .navbar__bar:nth-child(3) {
     transform: translateY(-6.5px) rotate(-45deg);
   }
-
+ 
   /* ── Mobile dropdown menu ─────────────────────────────────
-     MOBILE: visible (display:block), expands via max-height.
-     DESKTOP: overridden to display:none at the bottom.
+     Visible on mobile and tablet by default (display: block).
+     Hidden on desktop (≥ 1024px) via media query below.
+     Collapsed via max-height: 0 until --open class is added.
   ── */
   .navbar__mobile {
     position: fixed;
@@ -285,33 +288,34 @@ function closeMenu() {
     right: 0;
     z-index: 99;
     display: block;
-
+ 
     background: rgba(4, 6, 20, 0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--nav-border);
-
+ 
     max-height: 0;
     overflow: hidden;
     transition: max-height 320ms ease;
   }
-
+ 
   .navbar__mobile--open {
     max-height: 400px;
   }
-
+ 
   .navbar__mobile-links {
     list-style: none;
     margin: 0;
-    padding: 0.75rem 1.25rem 1.25rem;
+    /* Compact padding on small mobile */
+    padding: 0.5rem 1rem 1rem;
     display: flex;
     flex-direction: column;
   }
-
+ 
   .navbar__mobile-link {
     display: block;
     padding: 0.85rem 0;
-    font-family: var(--font-main); /* Audiowide here too */
+    font-family: var(--font-main);
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -320,32 +324,71 @@ function closeMenu() {
     border-bottom: 1px solid rgba(120, 80, 255, 0.08);
     transition: color 160ms, padding-left 160ms;
   }
-
+ 
   .navbar__mobile-link:hover {
     color: var(--color-text);
     padding-left: 0.5rem;
   }
-
+ 
   .navbar__mobile-link:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
   }
-
-  /* ══════════════════════════════════════════
-     DESKTOP OVERRIDES — min-width: 768px
-  ══════════════════════════════════════════ */
-  @media (min-width: 768px) {
+ 
+  /* ════════════════════════════════════════════════════════
+     TABLET — min-width: 480px
+     Slightly more room: bigger logo, more padding.
+     Still uses hamburger + dropdown menu.
+  ════════════════════════════════════════════════════════ */
+  @media (min-width: 480px) {
+    .navbar {
+      /* More breathing room on tablet */
+      padding: 0 1.5rem;
+    }
+ 
+    /* Slightly larger logo on tablet */
+    .navbar__brand :global(.logo-icon) {
+      width: 160px;
+    }
+ 
+    .navbar__mobile-links {
+      /* More padding inside the dropdown on tablet */
+      padding: 0.75rem 1.5rem 1.25rem;
+    }
+ 
+    .navbar__mobile-link {
+      /* Slightly larger text on tablet */
+      font-size: 0.75rem;
+    }
+  }
+ 
+  /* ════════════════════════════════════════════════════════
+     DESKTOP — min-width: 1024px
+     Switch from hamburger to inline links.
+     Logo at full size.
+  ════════════════════════════════════════════════════════ */
+  @media (min-width: 1024px) {
+    .navbar {
+      /* Full padding on desktop */
+      padding: 0 2rem;
+    }
+ 
+    /* Logo at full size on desktop */
+    .navbar__brand :global(.logo-icon) {
+      width: 180px;
+    }
+ 
     /* Show the inline link list */
     .navbar__links {
       display: flex;
     }
-
-    /* Hide the hamburger button */
+ 
+    /* Hide the hamburger button — not needed on desktop */
     .navbar__hamburger {
       display: none;
     }
-
-    /* Hide the mobile dropdown */
+ 
+    /* Hide the mobile dropdown — not needed on desktop */
     .navbar__mobile {
       display: none;
     }
