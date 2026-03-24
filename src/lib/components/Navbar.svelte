@@ -360,6 +360,10 @@ function closeMenu() {
       /* Slightly larger text on tablet */
       font-size: 0.75rem;
     }
+
+      .navbar__links {
+      display: flex;
+    }
   }
  
   /* ════════════════════════════════════════════════════════
