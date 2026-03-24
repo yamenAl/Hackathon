@@ -1,7 +1,11 @@
 <script>
+	import '$lib/assets/style/styleguide.css';
+  import Navbar from "$lib/components/Navbar.svelte";
+
+
+	let { children } = $props();
  // Import the Navbar component
  // $lib is Sveltekit's alias for src/lib.
- import Navbar from "$lib/components/Navbar.svelte";
 </script>
 
 <!-- Navbar appears on every page because it lives in the root layout -->
