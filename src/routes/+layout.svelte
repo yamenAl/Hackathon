@@ -38,7 +38,7 @@
  
   main {
     /* Must match --nav-height (60px) so content isn't hidden behind the navbar */
-    padding-top: 60px;
+    padding-top: 100px;
     min-height: 100vh;
   }
 </style>

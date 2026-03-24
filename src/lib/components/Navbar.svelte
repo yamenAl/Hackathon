@@ -1,6 +1,7 @@
 <script>
 // Import SvelteKit's page store to track the current route for active link highlighting
 import { page } from '$app/stores';
+import LogoIcon from '$lib/assets/svg/LogoIcon.svelte';
 
  // Navigation links — placeholder hrefs that map to the main sections.
   // Update these hrefs when the actual pages/sections are created.
@@ -34,37 +35,17 @@ function closeMenu() {
   so screen readers can jump straight to the nav.
 -->
 
-<nav class="navbar" role="navigation" aria-label="Main Navigation">
+<nav class="navbar" aria-label="Main Navigation">
+  <!-- ── LOGO / BRAND AREA ─────────────────────────────────
+   Clicking the logo brings the user back to the homepage.
+   aria-label gives screen readers a meaningful description.
+-->
+<a class="navbar__brand" href="/" aria-label="Nebula Xplorer — home">
 
-    <!-- ── LOGO / BRAND AREA ─────────────────────────────────
-       Clicking the logo brings the user back to the homepage.
-       aria-label gives screen readers a meaningful description.
-    -->
-      <a class="navbar__brand" href="/" aria-label="Nebula Xplorer — home">
+  <!-- Official logo component -->
+  <LogoIcon />
 
-
-    <!-- Simple SVG orbit icon representing the satellite mission -->
-    <svg class="navbar__logo" viewBox="0 0 32 32" fill="none"
-         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Outer orbit ring -->
-      <ellipse cx="16" cy="16" rx="13" ry="5"
-               stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-
-    <!-- Inner orbit ring -->
-      <ellipse cx="16" cy="16" rx="8" ry="3"
-               stroke="currentColor" stroke-width="1" opacity="0.6"/>
-      <!-- Central satellite body -->
-      <circle cx="16" cy="16" r="3" fill="currentColor"/>
-      <!-- Moving satellite dot on the outer ring -->
-      <circle cx="29" cy="16" r="1.8" fill="currentColor"/>
-    </svg>
-            
-  <!-- Brand name split into two lines for styling -->
-    <span class="navbar__brand-name">
-      <span class="navbar__brand-top">NEBULA</span>
-      <span class="navbar__brand-bottom">XPLORER</span>
-    </span>
-  </a>
+</a>
 
  <!-- ── NAVIGATION LINK LIST ──────────────────────────────
        Hidden on mobile; visible on desktop (≥ 768px via CSS).
@@ -146,7 +127,7 @@ function closeMenu() {
      All colours, sizes and fonts in one place.
   ── */
   :root {
-    --nav-height:    60px;
+    --nav-height:    90px;
     --nav-bg:        rgba(4, 6, 20, 0.85);
     --nav-border:    rgba(120, 80, 255, 0.2);
     --color-accent:  #7c5cfc;
@@ -187,44 +168,17 @@ function closeMenu() {
   .navbar__brand {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     text-decoration: none;
     flex-shrink: 0;
   }
 
-  .navbar__logo {
-    width: 28px;
-    height: 28px;
-    color: var(--color-accent);
-    animation: spin 12s linear infinite;
-    filter: drop-shadow(0 0 5px var(--color-accent));
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .navbar__brand-name {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-    font-family: var(--font-main);
-    user-select: none;
-  }
-
-  .navbar__brand-top {
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    color: var(--color-accent);
-    text-shadow: 0 0 10px rgba(124, 92, 252, 0.6);
-  }
-
-  .navbar__brand-bottom {
-    font-size: 0.5rem;
-    letter-spacing: 0.25em;
-    color: var(--color-accent2);
-    opacity: 0.85;
-  }
+.navbar__brand :global(.logo-icon) {
+  width: 180px;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+  margin-top: 10px;
+}
 
   /* ── Desktop nav links ────────────────────────────────────
      MOBILE: hidden — links live inside the mobile dropdown.
