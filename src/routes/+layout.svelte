@@ -1,6 +1,7 @@
 <script>
   import '$lib/assets/style/styleguide.css';
   import Navbar from "$lib/components/Navbar.svelte";
+  import StarbackBackground from "$lib/components/StarbackBackground.svelte";
 
   // Svelte 5 runes syntax — replaces the old `export let` slot pattern
   let { children } = $props();
@@ -16,32 +17,25 @@
   />
 </svelte:head>
 
-<!-- Navbar appears on every page because it lives in the root layout -->
-<Navbar />
+<!-- Full-site canvas starfield (see https://github.com/zuramai/starback.js ) -->
+<StarbackBackground />
 
-<!--
-  No <main> wrapper here — +page.svelte manages its own layout.
-  The boot sequence needs position: fixed with no padding offset.
--->
-{@render children()}
+<div class="app-surface">
+  <!-- Navbar appears on every page because it lives in the root layout -->
+  <Navbar />
+
+  <!--
+    No <main> wrapper here — +page.svelte manages its own layout.
+    The boot sequence needs position: fixed with no padding offset.
+  -->
+  {@render children()}
+</div>
 
 <style>
-  /* ── Global resets ────────────────────────────────────── */
-  :global(*, *::before, *::after) {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  :global(html) {
-    /* Smooth scroll for anchor links like #mission, #satellite */
-    scroll-behavior: smooth;
-  }
-
-  :global(body) {
-    background-color: #04040e;
-    color: #dde4f0;
-    font-family: 'Audiowide', sans-serif;
-    overflow-x: hidden;
+  .app-surface {
+    position: relative;
+    z-index: 1;
+    /* Full-height surface so fixed children (boot overlay) stay in a predictable hit-test stack */
+    min-height: 100dvh;
   }
 </style>
