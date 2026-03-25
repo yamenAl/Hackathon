@@ -1,22 +1,9 @@
 <script>
   // ============================================================
-  // Structure:
-  //   - Black hole visual (CSS animation)
-  //       TODO: replace with <video> when asset is ready
-  //   - Scroll-driven scale effect (black hole grows on scroll)
-  //   - Subtle "scroll" hint indicator at the bottom
-  //
-  // Props:
-  //   - scrollProgress: number (0–1) passed from +page.svelte
-  //     Used to scale the black hole as the user scrolls.
-  // ============================================================
- 
   // ── Props ──
   // scrollProgress is passed down from +page.svelte
   // It drives the black hole scale and opacity effects on scroll
   let { scrollProgress = 0 } = $props();
- 
-// ── Computed scroll values ──
 
 /**
  * Scale the black hole from 1x to 8x as the user scrolls
@@ -51,44 +38,26 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      ============================================================ -->
 <div class="hero">
  
-  <!-- ── Black hole visual ──────────────────────────────────────
-       TODO: When video asset is ready, replace the entire
-       `.blackhole` div below with:
- 
-       <video
-         class="hero__video"
-         src="/videos/blackhole.mp4"
-         autoplay
-         muted
-         loop
-         playsinline
-         aria-hidden="true"
-       ></video>
- 
-       And remove the CSS animation styles for .blackhole,
-       .blackhole__ring, .blackhole__core etc.
-       Keep the scroll-driven scale logic (blackHoleScale) —
-       it works the same way with a video background.
-       --------------------------------------------------------- -->
-  <div
-    class="blackhole"
-    style="transform: scale({blackHoleScale});"
-    aria-hidden="true"
+  <!-- Video background — scroll-driven scale blijft werken -->
+<div
+  class="blackhole"
+  style="transform: scale({blackHoleScale});"
+  aria-hidden="true"
+>
+  <video
+    class="hero__video"
+    autoplay
+    muted
+    loop
+    playsinline
   >
-    <!-- Outer accretion disk — slow rotation, fades on scroll -->
-    <div class="blackhole__disk blackhole__disk--outer" style="opacity: {glowOpacity};"></div>
- 
-    <!-- Inner accretion disk — counter-rotation for depth -->
-    <div class="blackhole__disk blackhole__disk--inner" style="opacity: {glowOpacity};"></div>
- 
-    <!-- Event horizon — the dark core of the black hole -->
-    <div class="blackhole__core"></div>
- 
-    <!-- Gravitational lensing rings — light bending effect -->
-    <div class="blackhole__lens blackhole__lens--1"></div>
-    <div class="blackhole__lens blackhole__lens--2"></div>
-    <div class="blackhole__lens blackhole__lens--3"></div>
-  </div>
+    <!-- Desktop video (768px en groter) — nog niet beschikbaar -->
+    <!-- <source media="(min-width: 768px)" src="/videos/blackhole-desktop.mp4" type="video/mp4" /> -->
+
+    <!-- Mobile video — standaard voor nu -->
+    <source src="/videos/blackhole-mobile.mp4" type="video/mp4" />
+  </video>
+</div>
  
   <!-- ── Star field background ─────────────────────────────────
        Static dots that create the sense of deep space.
@@ -186,12 +155,17 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      smooth 60fps scroll-driven animation.
   ── */
   .blackhole {
-    position:     relative;
+    position:     absolute;
     z-index:      1;
-    width:        280px;  /* smaller on mobile */
-    height:       280px;
-    will-change:  transform;
-    transition:   transform 0.05s linear; /* minimal lag on scroll */
+    inset:      0;
+  }
+
+    .hero__video {
+    position:   absolute;
+    inset:      0;
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
   }
  
   /* ── Accretion disk — outer ring ─────────────────────────────
@@ -298,35 +272,6 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
       0 0 80px rgba(0, 212, 255, 0.08);
   }
  
-  /*  Gravitational lensing rings ─────────────────────────────
-     Thin rings that represent light being bent around the
-     black hole — the photon sphere / Einstein ring effect.
-  ── */
-  .blackhole__lens {
-    position:      absolute;
-    border-radius: 50%;
-    border:        1px solid transparent;
-    pointer-events: none;
-  }
- 
-  .blackhole__lens--1 {
-    inset:         8%;
-    border-color:  rgba(123, 47, 255, 0.25);
-    animation:     lensPulse 3s ease-in-out infinite;
-  }
- 
-  .blackhole__lens--2 {
-    inset:         4%;
-    border-color:  rgba(0, 212, 255, 0.15);
-    animation:     lensPulse 3s ease-in-out infinite 1s;
-  }
- 
-  .blackhole__lens--3 {
-    inset:         0%;
-    border-color:  rgba(123, 47, 255, 0.08);
-    animation:     lensPulse 3s ease-in-out infinite 2s;
-  }
- 
   /* ── Scroll hint ──────────────────────────────────────────────
      Positioned at the bottom center.
      Fades out as the user starts scrolling.
@@ -412,11 +357,6 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      TABLET — min-width: 480px
   ════════════════════════════════════════════════════════════ */
   @media (min-width: 480px) {
-    /* Larger black hole on tablet */
-    .blackhole {
-      width:  340px;
-      height: 340px;
-    }
  
     /* Show scroll label on tablet and up */
     .hero__scroll-label {
@@ -432,11 +372,6 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      DESKTOP — min-width: 1024px
   ════════════════════════════════════════════════════════════ */
   @media (min-width: 1024px) {
-    /* Full size black hole on desktop */
-    .blackhole {
-      width:  420px;
-      height: 420px;
-    }
  
     .hero__scroll-hint {
       bottom: 3rem;
@@ -454,10 +389,4 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
   /* ════════════════════════════════════════════════════════════
      LARGE DESKTOP — min-width: 1440px
   ════════════════════════════════════════════════════════════ */
-  @media (min-width: 1440px) {
-    .blackhole {
-      width:  500px;
-      height: 500px;
-    }
-  }
 </style>

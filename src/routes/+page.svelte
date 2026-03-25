@@ -13,10 +13,10 @@
   // ── Page state ──
 
   /** Controls whether the boot sequence has finished */
-  let bootComplete = false;
+  let bootComplete = $state(false);
 
   /** Tracks how far the user has scrolled (0–1) across the full page */
-  let scrollProgress = 0;
+  let scrollProgress = $state(0);
 
   // ── Lifecycle ──
   onMount(() => {
