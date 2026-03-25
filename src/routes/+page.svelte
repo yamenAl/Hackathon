@@ -1,4 +1,5 @@
 <script>
+<<<<<<< Updated upstream
 
   import { onMount } from 'svelte';
 
@@ -379,3 +380,41 @@
 <footer class="section section--footer" aria-label="Site footer">
   <Footer />
 </footer>
+=======
+	import SatellietScrol from '$lib/components/SatellietScrol.svelte';
+</script>
+
+<div class="home-satellite">
+	<h1 class="home-satellite__title">Satellite</h1>
+	<SatellietScrol />
+</div>
+
+<style>
+	/* Mobile-first base; tablet uses viewport media. Desktop layout for *children* uses @container page. */
+	.home-satellite {
+		container-type: inline-size;
+		container-name: page;
+		max-width: min(var(--layout-content-max), 100vw - 2rem);
+		margin-inline: auto;
+		padding-inline: var(--spacing-sm);
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 480px) {
+		.home-satellite {
+			padding-inline: var(--spacing-md);
+		}
+	}
+
+	/* Padding when the viewport is wide (wrapper cannot target itself via @container). */
+	@media (min-width: 1024px) {
+		.home-satellite {
+			padding-inline: 0;
+		}
+	}
+
+	.home-satellite__title {
+		margin-bottom: var(--spacing-md);
+	}
+</style>
+>>>>>>> Stashed changes
