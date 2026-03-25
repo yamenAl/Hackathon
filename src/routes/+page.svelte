@@ -232,7 +232,7 @@
   .section--boot {
     position:        fixed;
     inset:           0;
-    z-index:         50;
+    z-index:         100;
     background:      var(--color-void);
     display:         flex;
     align-items:     center;
