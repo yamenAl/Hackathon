@@ -95,17 +95,19 @@
        Full-viewport black hole hero with a scroll-to-begin CTA.
        Visible immediately after boot completes.
        --------------------------------------------------------- -->
-  {#if bootComplete}
-    <section class="section section--hero" aria-label="Mission hero">
-  <HeroSection {scrollProgress} />
-</section>
+{#if bootComplete}
+  <section class="section section--hero" aria-label="Mission hero">
+    <HeroSection {scrollProgress} />
+  </section>
 
-    <!-- ── 3. Journey Section ───────────────────────────────────
-         The core scroll-driven experience.
-         As the user scrolls, they "fall" deeper into the black
-         hole while story copy and visual effects are revealed.
-         -------------------------------------------------------- -->
-    <section class="section section--journey" aria-label="Black hole journey">
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ── 3. Journey Section ───────────────────────────────────
+       The core scroll-driven experience.
+       As the user scrolls, they "fall" deeper into the black
+       hole while story copy and visual effects are revealed.
+       -------------------------------------------------------- -->
+  <section class="section section--journey" aria-label="Black hole journey">
       <!-- <JourneySection {scrollProgress} /> -->
 
       <!-- PLACEHOLDER -->
@@ -213,6 +215,26 @@
     position: relative;
     width:    100%;
   }
+
+  .section-divider {
+  width: 100%;
+  height: 2px;
+  position: relative;
+  z-index: 10;
+
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(128, 96, 255, 0.4) 20%,
+    #8060FF 50%,
+    rgba(128, 96, 255, 0.4) 80%,
+    transparent 100%
+  );
+
+  box-shadow:
+    0 0 10px rgba(128, 96, 255, 0.5),
+    0 0 30px rgba(128, 96, 255, 0.3);
+}
 
   /* ── Boot section ────────────────────────────────────────────
      z-index: 50 keeps the boot overlay BELOW the navbar
