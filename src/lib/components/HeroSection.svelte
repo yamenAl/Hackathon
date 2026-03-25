@@ -166,6 +166,7 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     width:      100%;
     height:     100%;
     object-fit: cover;
+    object-position: center center;
   }
  
   /* ── Accretion disk — outer ring ─────────────────────────────
@@ -296,7 +297,7 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     display:    block;
     width:      1px;
     height:     40px;
-    background: rgba(123, 47, 255, 0.6);
+    background: rgb(255, 255, 255);
  
     /* Animated line that travels downward */
     animation: scrollLine 1.8s ease-in-out infinite;
@@ -307,10 +308,10 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
   .hero__scroll-label {
     display:        none;
     font-family:    'Courier New', monospace;
-    font-size:      0.6rem;
+    font-size:      0.9rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color:          rgba(123, 47, 255, 0.5);
+    color:          rgb(255, 255, 255);
   }
  
   /* ════════════════════════════════════════════════════════════
@@ -357,6 +358,9 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      TABLET — min-width: 480px
   ════════════════════════════════════════════════════════════ */
   @media (min-width: 480px) {
+    .hero__video {
+    object-position: center 30%;
+  }
  
     /* Show scroll label on tablet and up */
     .hero__scroll-label {
@@ -382,14 +386,14 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     }
  
     .hero__scroll-label {
-      font-size: 0.65rem;
+      font-size: 1rem;
     }
 
      /* Fix video quality on desktop — contain zodat de volledige
      video zichtbaar is zonder bijsnijden op grote schermen */
     .hero__video {
     object-fit:      cover;
-    object-position: center;     
+    object-position: center center;     
   }
   }
  

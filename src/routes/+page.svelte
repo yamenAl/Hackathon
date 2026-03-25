@@ -5,11 +5,11 @@
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
+  import Footer from '$lib/components/Footer.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
   // import FooterSection    from '$lib/components/FooterSection.svelte';
-    import Footer from '$lib/components/Footer.svelte';
 
   // ── Page state ──
 
@@ -148,16 +148,11 @@
     </section>
 
     <!-- ── 6. Footer Section ────────────────────────────────────
-         Credits, mission links, and social / contact info.
+         Footer component with animation.
+         Replaces the placeholder now that Footer is built.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer">
-      <!-- <FooterSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--footer">
-        <p class="placeholder__label">[ FOOTER ]</p>
-        <p class="placeholder__hint">Credits and links go here</p>
-      </div>
+      <Footer />
     </footer>
   {/if}
 
@@ -240,7 +235,7 @@
     display:         flex;
     align-items:     center;
     justify-content: center;
-    padding-top:     90px; /* matches --nav-height in Navbar.svelte */
+    padding-top:     0px; /* matches --nav-height in Navbar.svelte */
   }
 
   /* ── Journey — tall section for scroll-driven animations ─── */
@@ -376,6 +371,3 @@
     }
   }
 </style>
-<footer class="section section--footer" aria-label="Site footer">
-  <Footer />
-</footer>
