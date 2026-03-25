@@ -9,6 +9,7 @@
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
   // import FooterSection    from '$lib/components/FooterSection.svelte';
+    import Footer from '$lib/components/Footer.svelte';
 
   // ── Page state ──
 
@@ -375,7 +376,6 @@
     }
   }
 </style>
-    import Footer from "$lib/components/Footer.svelte";
-</script>
-
-<Footer />
+<footer class="section section--footer" aria-label="Site footer">
+  <Footer />
+</footer>
