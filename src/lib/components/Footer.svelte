@@ -1,7 +1,6 @@
 <script>
     import leftHand from "$lib/assets/img/left-hand-file.png";
     import rightHand from "$lib/assets/img/right-hand-file.png";
-    import LogoIcon from "$lib/assets/svg/LogoIcon.svelte";
 </script>
 
 <section class="scroll-scene" aria-label="Scroll animation with hands">
@@ -11,7 +10,7 @@
         </div>
 
         <div class="logo-box">
-            <p>NEBULA</p>
+            <h1>NEBULA</h1>
         </div>
 
         <div class="lane lane-right">
@@ -20,11 +19,23 @@
     </div>
 </section>
 
-<style>
-    P {
-        font-size: 48px;
-    }
+<p class="footer-info">
+    <span>WEEK CHALLENGE 2026</span>
+    <span>FDND AGENCY</span>
+    <span>
+        MEMBERS:
+        <span class="member-names">
+            <span>RAZAN</span>
+            <span>|</span>
+            <span>YAMEN</span>
+            <span>|</span>
+            <span>ILIAS</span>
+        </span>
+    </span>
+</p>
 
+
+<style>
     .scroll-scene {
         min-height: 280vh;
         overflow-x: clip;
@@ -89,6 +100,32 @@
         transform: translateX(220vw);
     }
 
+    .footer-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 2rem 1rem 3rem;
+        color: var(--neutral-grey-500);
+        font-size: 0.92rem;
+        line-height: 1.4;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.95;
+        gap: 1rem;
+    }
+
+    .footer-info > span {
+        flex: 1;
+        text-align: center;
+    }
+
+    .member-names {
+        display: inline-flex;
+        gap: 1rem;
+        margin-left: 0.35rem;
+    }
+
     /* Scroll-timeline animation for modern browsers */
     @supports (animation-timeline: --scene) {
         .hand-left {
@@ -148,9 +185,6 @@
             padding-top: 20rem;
         }
 
-        .logo-box p {
-            font-size: 40px;
-        }
     }
 
     /* Phone styles */
@@ -162,9 +196,13 @@
             padding-top: 10rem;
         }
 
-
-        .logo-box p {
-            font-size: 16px;
+        .footer-info {
+            display: grid;
+            justify-items: center;
+            padding: 1.5rem 0.75rem 2.25rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            gap: 0.35rem;
         }
     }
 </style>
