@@ -1,6 +1,7 @@
 <script>
     import leftHand from "$lib/assets/img/left-hand-file.png";
     import rightHand from "$lib/assets/img/right-hand-file.png";
+    import logo from "$lib/assets/img/logo.svg";
 </script>
 
 <section class="scroll-scene" aria-label="Scroll animation with hands">
@@ -9,8 +10,8 @@
             <img src={leftHand} alt="Left hand icon" class="hand hand-left" />
         </div>
 
-        <div class="text-box">
-            <p class="footer-text">Hello World</p>
+        <div class="logo-box">
+            <img src={logo} alt="Project logo" class="logo" />
         </div>
 
         <div class="lane lane-right">
@@ -20,6 +21,10 @@
 </section>
 
 <style>
+    :global(body) {
+        background-color: #1A0660;
+    }
+
     .scroll-scene {
         min-height: 280vh;
         overflow-x: clip;
@@ -55,12 +60,17 @@
         justify-content: flex-start;
     }
 
-    .text-box {
-        flex: 0 0 auto;
-        min-width: 180px;
-        padding: 0.75rem 1rem;
-        border: 1px solid;
-        text-align: center;
+    .logo-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 1rem;
+    }
+
+    .logo {
+        width: clamp(120px, 18vw, 260px);
+        height: auto;
+        display: block;
     }
 
     .hand {
@@ -125,9 +135,5 @@
         to {
             transform: translateX(0);
         }
-    }
-
-    .footer-text {
-        margin: 0;
     }
 </style>
