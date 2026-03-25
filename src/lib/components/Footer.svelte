@@ -1,7 +1,7 @@
 <script>
     import leftHand from "$lib/assets/img/left-hand-file.png";
     import rightHand from "$lib/assets/img/right-hand-file.png";
-    import logo from "$lib/assets/img/logo.svg";
+    import LogoIcon from "$lib/assets/svg/LogoIcon.svelte";
 </script>
 
 <section class="scroll-scene" aria-label="Scroll animation with hands">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="logo-box">
-            <img src={logo} alt="Project logo" class="logo" />
+            <p>NEBULA</p>
         </div>
 
         <div class="lane lane-right">
@@ -21,8 +21,8 @@
 </section>
 
 <style>
-    :global(body) {
-        background-color: #1A0660;
+    P {
+        font-size: 48px;
     }
 
     .scroll-scene {
@@ -67,7 +67,7 @@
         padding: 0 1rem;
     }
 
-    .logo {
+    .logo-box :global(.logo-icon) {
         width: clamp(120px, 18vw, 260px);
         height: auto;
         display: block;
@@ -89,6 +89,7 @@
         transform: translateX(220vw);
     }
 
+    /* Scroll-timeline animation for modern browsers */
     @supports (animation-timeline: --scene) {
         .hand-left {
             animation-name: left-to-center;
@@ -109,6 +110,7 @@
         }
     }
 
+    /* Fallback animation for older browsers */
     @supports not (animation-timeline: --scene) {
         .hand-left {
             animation: left-to-center 1.1s ease-out both;
@@ -134,6 +136,35 @@
         }
         to {
             transform: translateX(0);
+        }
+    }
+
+    /* Tablet styles */
+    @media (max-width: 1024px) {
+        .hand-left{
+            padding-top: 10rem;
+        }
+        .hand-right {
+            padding-top: 20rem;
+        }
+
+        .logo-box p {
+            font-size: 40px;
+        }
+    }
+
+    /* Phone styles */
+    @media (max-width: 768px) {
+        .hand-left{
+            padding-top: 5rem;
+        }
+        .hand-right {
+            padding-top: 10rem;
+        }
+
+
+        .logo-box p {
+            font-size: 16px;
         }
     }
 </style>
