@@ -1,16 +1,15 @@
 <script>
-<<<<<<< Updated upstream
 
   import { onMount } from 'svelte';
 
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
+  import Footer from '$lib/components/Footer.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
   // import FooterSection    from '$lib/components/FooterSection.svelte';
-    import Footer from '$lib/components/Footer.svelte';
 
   // ── Page state ──
 
@@ -149,16 +148,11 @@
     </section>
 
     <!-- ── 6. Footer Section ────────────────────────────────────
-         Credits, mission links, and social / contact info.
+         Footer component with animation.
+         Replaces the placeholder now that Footer is built.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer">
-      <!-- <FooterSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--footer">
-        <p class="placeholder__label">[ FOOTER ]</p>
-        <p class="placeholder__hint">Credits and links go here</p>
-      </div>
+      <Footer />
     </footer>
   {/if}
 
@@ -241,7 +235,7 @@
     display:         flex;
     align-items:     center;
     justify-content: center;
-    padding-top:     90px; /* matches --nav-height in Navbar.svelte */
+    padding-top:     0px; /* matches --nav-height in Navbar.svelte */
   }
 
   /* ── Journey — tall section for scroll-driven animations ─── */
@@ -377,44 +371,3 @@
     }
   }
 </style>
-<footer class="section section--footer" aria-label="Site footer">
-  <Footer />
-</footer>
-=======
-	import SatellietScrol from '$lib/components/SatellietScrol.svelte';
-</script>
-
-<div class="home-satellite">
-	<h1 class="home-satellite__title">Satellite</h1>
-	<SatellietScrol />
-</div>
-
-<style>
-	/* Mobile-first base; tablet uses viewport media. Desktop layout for *children* uses @container page. */
-	.home-satellite {
-		container-type: inline-size;
-		container-name: page;
-		max-width: min(var(--layout-content-max), 100vw - 2rem);
-		margin-inline: auto;
-		padding-inline: var(--spacing-sm);
-		box-sizing: border-box;
-	}
-
-	@media (min-width: 480px) {
-		.home-satellite {
-			padding-inline: var(--spacing-md);
-		}
-	}
-
-	/* Padding when the viewport is wide (wrapper cannot target itself via @container). */
-	@media (min-width: 1024px) {
-		.home-satellite {
-			padding-inline: 0;
-		}
-	}
-
-	.home-satellite__title {
-		margin-bottom: var(--spacing-md);
-	}
-</style>
->>>>>>> Stashed changes
