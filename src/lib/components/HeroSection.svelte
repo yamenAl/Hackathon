@@ -384,6 +384,13 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     .hero__scroll-label {
       font-size: 0.65rem;
     }
+
+     /* Fix video quality on desktop — contain zodat de volledige
+     video zichtbaar is zonder bijsnijden op grote schermen */
+    .hero__video {
+    object-fit:      cover;
+    object-position: center;     
+  }
   }
  
   /* ════════════════════════════════════════════════════════════
