@@ -3,7 +3,19 @@
   // ── Props ──
   // scrollProgress is passed down from +page.svelte
   // It drives the black hole scale and opacity effects on scroll
-  let { scrollProgress = 0 } = $props();
+  // experienceActive: true after the user leaves boot — we start video then (autoplay after mount fails gesture policy without this).
+  let { scrollProgress = 0, experienceActive = false } = $props();
+
+  /** @type {HTMLVideoElement | undefined} */
+  let videoEl = $state();
+
+  $effect(() => {
+    if (!experienceActive || !videoEl) return;
+    videoEl.muted = true;
+    void videoEl.play().catch(() => {
+      /* Autoplay policies: muted play usually succeeds; ignore rare failures */
+    });
+  });
 
 /**
  * Scale the black hole from 1x to 8x as the user scrolls
@@ -45,11 +57,13 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
   aria-hidden="true"
 >
   <video
+    id="blackhole-hero-video"
+    bind:this={videoEl}
     class="hero__video"
-    autoplay
     muted
     loop
     playsinline
+    preload="auto"
   >
     <!-- Desktop video (768px en groter) — nog niet beschikbaar -->
     <!-- <source media="(min-width: 768px)" src="/videos/blackhole-desktop.mp4" type="video/mp4" /> -->
