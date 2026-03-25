@@ -171,7 +171,7 @@
     --color-void:        #000000;   /* deep space black          */
     --color-space:       #05020f;   /* near-black with blue hint */
     --color-nebula:      #1a0533;   /* deep purple               */
-    --color-glow-purple: #7b2fff;   /* primary neon accent       */
+    --color-glow-purple: #8060FF;  /* primary neon accent       */
     --color-glow-blue:   #00d4ff;   /* secondary neon accent     */
     --color-text:        #e8e0f5;   /* off-white body text       */
     --color-text-muted:  #6b5e8a;   /* dimmed / secondary text   */
@@ -274,19 +274,19 @@
     width:           100%;
     min-height:      inherit;
     padding:         2rem 1rem;   /* compact on mobile */
-    border:          1px dashed var(--color-glow-purple);
-    opacity:         0.5;
+    border: 1px dashed rgba(128, 96, 255, 0.3);
     text-align:      center;
   }
 
   /* Smaller text on mobile */
   .placeholder__label {
-    font-size:      1rem;
-    font-weight:    700;
-    color:          var(--color-glow-purple);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-glow-purple);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(128, 96, 255, 0.28);
+}
 
   .placeholder__hint {
     font-size: 0.75rem;
@@ -299,23 +299,38 @@
     font-family: monospace;
   }
 
-  .placeholder__skip {
-    margin-top:  1rem;
-    padding:     0.5rem 1.25rem; /* tighter on mobile */
-    background:  transparent;
-    border:      1px solid var(--color-glow-purple);
-    color:       var(--color-glow-purple);
-    font-family: var(--font-display);
-    font-size:   0.8rem;
-    cursor:      pointer;
-    transition:  background var(--transition-smooth),
-                 color      var(--transition-smooth);
-  }
+ .placeholder__skip {
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
 
-  .placeholder__skip:hover {
-    background: var(--color-glow-purple);
-    color:      var(--color-void);
-  }
+  background: rgba(128, 96, 255, 0.08);
+  border: 1px solid #8060FF;
+  color: #8060FF;
+
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  box-shadow:
+    0 0 10px rgba(128, 96, 255, 0.4),
+    0 0 20px rgba(128, 96, 255, 0.2);
+}
+
+.placeholder__skip:hover {
+  background: #8060FF;
+  color: #000;
+
+  box-shadow:
+    0 0 20px rgba(128, 96, 255, 0.8),
+    0 0 40px rgba(128, 96, 255, 0.4);
+}
+
+.placeholder__skip:focus-visible {
+  outline: 2px solid #8060FF;
+  outline-offset: 4px;
+}
 
   /* ════════════════════════════════════════════════════════════
      TABLET — min-width: 480px
