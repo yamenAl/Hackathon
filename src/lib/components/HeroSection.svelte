@@ -306,8 +306,9 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
  
   /* Hide label on smallest screens — line alone is enough */
   .hero__scroll-label {
-    display:        none;
+    display:        block;
     font-family:    'Courier New', monospace;
+    font-weight: bold;
     font-size:      0.9rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -364,7 +365,7 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
  
     /* Show scroll label on tablet and up */
     .hero__scroll-label {
-      display: block;
+      font-size: 0.9rem;
     }
  
     .hero__scroll-line {
