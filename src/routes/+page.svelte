@@ -6,6 +6,7 @@
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import MissionIntroSection from '$lib/components/MissionIntroSection.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
@@ -101,6 +102,9 @@
   </section>
 
   <div class="section-divider" aria-hidden="true"></div>
+  <section class="section section--mission-intro" aria-label="Mission introduction">
+  <MissionIntroSection />
+</section>
 
   <!-- ── 3. Journey Section ───────────────────────────────────
        The core scroll-driven experience.
@@ -277,6 +281,14 @@
     min-height:  100vh;
     padding-top: 90px;
   }
+
+  .section--mission-scroll {
+  position: relative;
+  min-height: auto;
+  background:
+    radial-gradient(circle at top center, rgba(128, 96, 255, 0.08), transparent 40%),
+    linear-gradient(180deg, #04040e 0%, #060612 100%);
+}
 
   /* ── Footer ──────────────────────────────────────────────── */
   .section--footer {
