@@ -62,7 +62,7 @@ function closeMenu() {
           class="navbar__link"
           class:navbar__link--active={$page.url.hash === link.href}
           href={link.href}
-          on:click={closeMenu}
+          onclick={closeMenu}
         >
           {link.label}
         </a>
@@ -79,7 +79,7 @@ function closeMenu() {
  <button
     class="navbar__hamburger"
     class:navbar__hamburger--open={menuOpen}
-    on:click={toggleMenu}
+    onclick={toggleMenu}
     aria-expanded={menuOpen}
     aria-controls="mobile-menu"
     aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -107,7 +107,7 @@ function closeMenu() {
           <a
             class="navbar__mobile-link"
             href={link.href}
-            on:click={closeMenu}
+            onclick={closeMenu}
             tabindex={menuOpen ? 0 : -1}
           >
             {link.label}
@@ -398,3 +398,4 @@ function closeMenu() {
     }
   }
 </style>
+
