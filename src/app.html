@@ -6,6 +6,7 @@
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<!-- display:contents can break click hit-testing for nested controls in some browsers -->
+		<div id="sveltekit-body" class="sveltekit-body">%sveltekit.body%</div>
 	</body>
 </html>
