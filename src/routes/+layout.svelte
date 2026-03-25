@@ -1,6 +1,7 @@
 <script>
   import '$lib/assets/style/styleguide.css';
   import Navbar from "$lib/components/Navbar.svelte";
+  import CursorTrail from '$lib/components/CursorTrail.svelte';
 
   // Svelte 5 runes syntax — replaces the old `export let` slot pattern
   let { children } = $props();
@@ -18,6 +19,8 @@
 
 <!-- Navbar appears on every page because it lives in the root layout -->
 <Navbar />
+<CursorTrail />
+{@render children()}
 
 <!--
   No <main> wrapper here — +page.svelte manages its own layout.
