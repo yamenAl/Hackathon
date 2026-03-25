@@ -4,7 +4,7 @@
 
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
-  // import HeroSection      from '$lib/components/HeroSection.svelte';
+  import HeroSection      from '$lib/components/HeroSection.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
@@ -13,10 +13,10 @@
   // ── Page state ──
 
   /** Controls whether the boot sequence has finished */
-  let bootComplete = false;
+  let bootComplete = $state(false);
 
   /** Tracks how far the user has scrolled (0–1) across the full page */
-  let scrollProgress = 0;
+  let scrollProgress = $state(0);
 
   // ── Lifecycle ──
   onMount(() => {
@@ -96,14 +96,8 @@
        --------------------------------------------------------- -->
   {#if bootComplete}
     <section class="section section--hero" aria-label="Mission hero">
-      <!-- <HeroSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--hero">
-        <p class="placeholder__label">[ HERO SECTION ]</p>
-        <p class="placeholder__hint">Black hole visual + scroll CTA goes here</p>
-      </div>
-    </section>
+  <HeroSection {scrollProgress} />
+</section>
 
     <!-- ── 3. Journey Section ───────────────────────────────────
          The core scroll-driven experience.
