@@ -1,9 +1,26 @@
-<!-- MissionScrollCards.svelte -->
+<script>
+  /**
+   * Smoothly scroll to the Journey section.
+   * The target section must have id="journey" in +page.svelte.
+   */
+  function scrollToJourney() {
+    const section = document.getElementById('journey');
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
+</script>
+
+<!-- Mission overview cards -->
 <section class="mission-scroll" aria-label="Mission overview cards">
   <!--
     Horizontal scroll track.
-    Only one card is meant to be visible at a time.
-    Users can scroll/swipe right to reveal the next card.
+    Only one card should be visible at a time.
+    Users can scroll/swipe horizontally to reveal the next card.
   -->
   <div class="mission-scroll__track">
     <!-- Card 1 -->
@@ -22,10 +39,10 @@
       </p>
 
       <p class="mission-card__text">
-        SRON heeft de leiding over NEBULA – Xplorer, waarmee het bijdraagt aan een
-        nieuwe generatie wetenschappers, ontwerpers en technici voor het Nederlandse
-        ruimteonderzoek.
+        SRON heeft de leiding over NEBULA – Xplorer, waarmee het bijdraagt aan een nieuwe
+        generatie wetenschappers, ontwerpers en technici voor het Nederlandse ruimteonderzoek.
       </p>
+
     </article>
 
     <!-- Card 2 -->
@@ -43,6 +60,10 @@
       </p>
     </article>
   </div>
+    <!-- CTA button inside the first card -->
+      <button class="mission-card__cta" type="button" on:click={scrollToJourney}>
+        Start your journey
+      </button>
 </section>
 <style>
   /* ============================================================
@@ -185,6 +206,50 @@
   .mission-card__text + .mission-card__text {
     margin-top: 1rem;
   }
+ .mission-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 240px;
+  margin: 2.5rem auto 0;
+  padding: 0.75rem 1.6rem;
+
+  border: 1px solid rgba(128, 96, 255, 0.95);
+  border-radius: 0;
+
+  background: #8060ff;
+  color: #120a2c;
+
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px rgba(128, 96, 255, 0.6),
+    0 0 24px rgba(128, 96, 255, 0.35);
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background 200ms ease;
+}
+
+.mission-card__cta:hover {
+  transform: translateY(-2px);
+  background: #8f72ff;
+  box-shadow:
+    0 0 16px rgba(128, 96, 255, 0.8),
+    0 0 36px rgba(128, 96, 255, 0.45);
+}
+
+.mission-card__cta:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
 
   /* ============================================================
      TABLET

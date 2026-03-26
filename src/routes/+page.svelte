@@ -111,7 +111,11 @@
        As the user scrolls, they "fall" deeper into the black
        hole while story copy and visual effects are revealed.
        -------------------------------------------------------- -->
-  <section class="section section--journey" aria-label="Black hole journey">
+  <section
+  id="journey"
+  class="section section--journey"
+  aria-label="Black hole journey"
+>
       <!-- <JourneySection {scrollProgress} /> -->
 
       <!-- PLACEHOLDER -->
