@@ -57,11 +57,13 @@
     aria-hidden="true"
   >
     <video
+      id="blackhole-hero-video"
+      bind:this={videoEl}
       class="hero__video"
-      autoplay
       muted
       loop
       playsinline
+      preload="auto"
     >
       <!-- Desktop video (768px en groter) — nog niet beschikbaar -->
       <!-- <source media="(min-width: 768px)" src="/videos/blackhole-desktop.mp4" type="video/mp4" /> -->
@@ -69,6 +71,16 @@
       <!-- Mobile video — standaard voor nu -->
       <source src="/videos/blackhole-mobile.mp4" type="video/mp4" />
     </video>
+
+    <!-- Ambient sound — started from +page enterExperience() (same gesture as video.play) -->
+    <audio
+      id="blackhole-hero-audio"
+      class="hero__audio"
+      src="/audio/blackhole-sound.mp3"
+      loop
+      preload="auto"
+      aria-hidden="true"
+    ></audio>
   </div>
 
   <!-- ── Star field background ─────────────────────────────────
@@ -218,6 +230,19 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
+  }
+
+  /* No controls — keep out of layout; avoid display:none (can block playback in some browsers) */
+  .hero__audio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* ── Hero content overlay ─────────────────────────────────── */
