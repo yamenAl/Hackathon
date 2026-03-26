@@ -85,7 +85,7 @@
     }
 
     .hand {
-        width: clamp(320px, 68vw, 980px);
+        width: clamp(520px, 88vw, 1180px);
         height: auto;
         display: block;
     }
@@ -189,11 +189,15 @@
 
     /* Phone styles */
     @media (max-width: 768px) {
+        .hand {
+            width: clamp(120px, 60vw, 320px);
+        }
+
         .hand-left{
-            padding-top: 5rem;
+            padding-top: 3rem;
         }
         .hand-right {
-            padding-top: 10rem;
+            padding-top: 5rem;
         }
 
         .footer-info {

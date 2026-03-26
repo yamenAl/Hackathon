@@ -26,8 +26,6 @@
   No <main> wrapper here — +page.svelte manages its own layout.
   The boot sequence needs position: fixed with no padding offset.
 -->
-{@render children()}
-
 <style>
   /* ── Global resets ────────────────────────────────────── */
   :global(*, *::before, *::after) {
