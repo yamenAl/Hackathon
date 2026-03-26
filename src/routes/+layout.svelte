@@ -24,9 +24,17 @@
 <CursorTrail />
 {@render children()}
 
-<div class="app-surface">
-  <!-- Navbar appears on every page because it lives in the root layout -->
-  <Navbar />
+<!--
+  No <main> wrapper here — +page.svelte manages its own layout.
+  The boot sequence needs position: fixed with no padding offset.
+-->
+<style>
+  /* ── Global resets ────────────────────────────────────── */
+  :global(*, *::before, *::after) {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
   <!--
     No <main> wrapper here — +page.svelte manages its own layout.
