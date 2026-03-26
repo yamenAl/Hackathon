@@ -3,8 +3,6 @@
 
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
-  import HeroSection      from '$lib/components/HeroSection.svelte';
-  import SatellietScrol   from '$lib/components/SatellietScrol.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
