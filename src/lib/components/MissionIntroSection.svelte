@@ -192,7 +192,7 @@
     font-family: 'Audiowide', sans-serif;
     font-size: 1rem;
     line-height: 1.3;
-    color: #f3efff;
+    color:  #C9B8FF;
   }
 
   .mission-card__text {
@@ -200,7 +200,7 @@
     font-family: 'Courier New', monospace;
     font-size: 1rem;
     line-height: 1.8;
-    color: rgba(232, 224, 245, 0.84);
+    color:  #ffffff;
   }
 
   .mission-card__text + .mission-card__text {
