@@ -49,40 +49,40 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
      through the Journey section above it.
      ============================================================ -->
 <div class="hero">
- 
+
   <!-- Video background — scroll-driven scale blijft werken -->
-<div
-  class="blackhole"
-  style="transform: scale({blackHoleScale});"
-  aria-hidden="true"
->
-  <video
-    id="blackhole-hero-video"
-    bind:this={videoEl}
-    class="hero__video"
-    muted
-    loop
-    playsinline
-    preload="auto"
-  >
-    <!-- Desktop video (768px en groter) — nog niet beschikbaar -->
-    <!-- <source media="(min-width: 768px)" src="/videos/blackhole-desktop.mp4" type="video/mp4" /> -->
-
-    <!-- Mobile video — standaard voor nu -->
-    <source src="/videos/blackhole-mobile.mp4" type="video/mp4" />
-  </video>
-
-  <!-- Ambient sound — started from +page enterExperience() (same gesture as video.play) -->
-  <audio
-    id="blackhole-hero-audio"
-    class="hero__audio"
-    src="/audio/blackhole-sound.mp3"
-    loop
-    preload="auto"
+  <div
+    class="blackhole"
+    style="transform: scale({blackHoleScale});"
     aria-hidden="true"
-  ></audio>
-</div>
- 
+  >
+    <video
+      id="blackhole-hero-video"
+      bind:this={videoEl}
+      class="hero__video"
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <!-- Desktop video (768px en groter) — nog niet beschikbaar -->
+      <!-- <source media="(min-width: 768px)" src="/videos/blackhole-desktop.mp4" type="video/mp4" /> -->
+
+      <!-- Mobile video — standaard voor nu -->
+      <source src="/videos/blackhole-mobile.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Ambient sound — started from +page enterExperience() (same gesture as video.play) -->
+    <audio
+      id="blackhole-hero-audio"
+      class="hero__audio"
+      src="/audio/blackhole-sound.mp3"
+      loop
+      preload="auto"
+      aria-hidden="true"
+    ></audio>
+  </div>
+
   <!-- ── Star field background ─────────────────────────────────
        Static dots that create the sense of deep space.
        CSS generated via box-shadow on a pseudo-element.
@@ -184,7 +184,7 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     inset:      0;
   }
 
-    .hero__video {
+  .hero__video {
     position:   absolute;
     inset:      0;
     width:      100%;
@@ -205,7 +205,7 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     white-space: nowrap;
     border: 0;
   }
- 
+
   /* ── Accretion disk — outer ring ─────────────────────────────
      The glowing ring of superheated matter orbiting the black hole.
      Rotates clockwise slowly.

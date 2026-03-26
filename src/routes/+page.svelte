@@ -22,6 +22,25 @@
   /** Tracks how far the user has scrolled (0–1) across the full page */
   let scrollProgress = $state(0);
 
+  /** Pause hero ambience when scrolled past the video section; resume when scrolling back. */
+  function syncHeroAudio() {
+    const a = document.getElementById('blackhole-hero-audio');
+    if (!(a instanceof HTMLAudioElement)) return;
+
+    const hero = document.querySelector('.section--hero');
+    if (!hero) return;
+
+    const rect = hero.getBoundingClientRect();
+    const heroBottom = window.scrollY + rect.bottom;
+    const pastHero = window.scrollY >= heroBottom - 0.5;
+
+    if (pastHero) {
+      if (!a.paused) a.pause();
+    } else if (bootComplete && a.paused) {
+      void a.play().catch(() => {});
+    }
+  }
+
   // ── Lifecycle ──
   onMount(() => {
     /**
@@ -32,17 +51,23 @@
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProgress  = docHeight > 0 ? scrollTop / docHeight : 0;
+      scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
+      syncHeroAudio();
     };
 
+    const handleResize = () => syncHeroAudio();
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     const loadingTimer = window.setTimeout(() => {
       showLoading = false;
     }, 3000);
 
-    // Clean up the listener when the component is destroyed
+    requestAnimationFrame(() => syncHeroAudio());
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
       window.clearTimeout(loadingTimer);
     };
   });
@@ -68,6 +93,7 @@
       void a.play().catch(() => {});
     }
     bootComplete = true;
+    queueMicrotask(() => syncHeroAudio());
   }
 
   function onBootComplete() {
