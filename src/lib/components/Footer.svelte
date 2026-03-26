@@ -22,16 +22,7 @@
 <p class="footer-info">
     <span>WEEK CHALLENGE 2026</span>
     <span>FDND AGENCY</span>
-    <span>
-        MEMBERS:
-        <span class="member-names">
-            <span>RAZAN</span>
-            <span>|</span>
-            <span>YAMEN</span>
-            <span>|</span>
-            <span>ILIAS</span>
-        </span>
-    </span>
+    <span>GUARDIAN</span>
 </p>
 
 

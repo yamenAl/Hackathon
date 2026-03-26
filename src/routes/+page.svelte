@@ -1,38 +1,21 @@
 <script>
-
   import { onMount } from 'svelte';
 
-  // ── Component imports (to be created in subsequent stories) ──
-  // import BootSequence     from '$lib/components/BootSequence.svelte';
-  import HeroSection      from '$lib/components/HeroSection.svelte';
+  import HeroSection from '$lib/components/HeroSection.svelte';
   import MissionIntroSection from '$lib/components/MissionIntroSection.svelte';
-  // import JourneySection   from '$lib/components/JourneySection.svelte';
-  // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
-  // import MissionSection   from '$lib/components/MissionSection.svelte';
-  // import FooterSection    from '$lib/components/FooterSection.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import Loading from '$lib/components/Loading.svelte';
+  import SatellietScrol from '$lib/components/SatellietScrol.svelte';
 
-  // ── Page state ──
-
-  /** Controls whether the boot sequence has finished */
   let bootComplete = $state(false);
   let showLoading = $state(true);
-
-  /** Tracks how far the user has scrolled (0–1) across the full page */
   let scrollProgress = $state(0);
 
-  // ── Lifecycle ──
   onMount(() => {
-    /**
-     * Listen to scroll events on the window.
-     * scrollProgress is a normalized value (0 = top, 1 = bottom)
-     * that child sections can use for parallax / reveal effects.
-     */
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProgress  = docHeight > 0 ? scrollTop / docHeight : 0;
+      scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -40,22 +23,12 @@
       showLoading = false;
     }, 3000);
 
-    // Clean up the listener when the component is destroyed
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.clearTimeout(loadingTimer);
     };
   });
 
-  /**
-   * Called by BootSequence when its animation finishes.
-   * Setting bootComplete = true unmounts the boot overlay
-   * and reveals the main experience.
-   */
-  /**
-   * Hero + video stay mounted under the boot overlay so `HTMLVideoElement.play()`
-   * can run in the same user-gesture turn as the Skip click (required on many browsers).
-   */
   function enterExperience() {
     const v = document.getElementById('blackhole-hero-video');
     if (v instanceof HTMLVideoElement) {
@@ -65,13 +38,7 @@
     bootComplete = true;
   }
 
-  function onBootComplete() {
-    void enterExperience();
-  }
-
   /**
-   * Direct DOM listener — avoids delegated `onclick` quirks and ensures the
-   * handler runs even when stacking / `display: contents` confuses hit-testing.
    * @param {HTMLButtonElement} node
    */
   function bootSkipButton(node) {
@@ -87,10 +54,6 @@
   }
 </script>
 
-<!-- ============================================================
-     SEO / Meta
-     (SvelteKit <svelte:head> lets us set per-page <head> tags)
-     ============================================================ -->
 <svelte:head>
   <title>Nebula Xplorer — Journey into the Black Hole</title>
   <meta
@@ -99,31 +62,21 @@
   />
 </svelte:head>
 
-<!-- ============================================================
-     Page wrapper
-     The `--scroll-progress` custom property is passed down to
-     all child sections so they can drive CSS animations from scroll.
-     ============================================================ -->
 <main
   class="page"
   style="--scroll-progress: {scrollProgress}"
   aria-label="Nebula Xplorer interactive mission experience"
 >
-
-  <!-- Hero + video: always mounted first so the element exists when Skip runs play() -->
   <section class="section section--hero" aria-label="Mission hero">
     <HeroSection {scrollProgress} experienceActive={bootComplete} />
   </section>
 
-  <!-- Boot overlay on top of hero until Skip (z-index: 50, below navbar) -->
   {#if !bootComplete}
     {#if showLoading}
       <Loading />
     {/if}
-    <section class="section section--boot" aria-label="Mission boot sequence">
-      <!-- <BootSequence on:complete={onBootComplete} /> -->
 
-      <!-- PLACEHOLDER — remove when BootSequence component is ready -->
+    <section class="section section--boot" aria-label="Mission boot sequence">
       <div class="placeholder placeholder--boot">
         <p class="placeholder__label">[ BOOT SEQUENCE ]</p>
         <p class="placeholder__hint">BootSequence component goes here</p>
@@ -134,177 +87,122 @@
     </section>
   {/if}
 
-  <!-- ── 2. Hero Section ───────────────────────────────────────
-       Full-viewport black hole hero with a scroll-to-begin CTA.
-       Visible immediately after boot completes.
-       --------------------------------------------------------- -->
-{#if bootComplete}
-  <section class="section section--hero" aria-label="Mission hero">
-    <HeroSection {scrollProgress} />
-  </section>
+  {#if bootComplete}
+    <div class="section-divider" aria-hidden="true"></div>
 
-  <div class="section-divider" aria-hidden="true"></div>
-  <section class="section section--mission-intro" aria-label="Mission introduction">
-  <MissionIntroSection />
-</section>
+    <section class="section section--mission-intro" aria-label="Mission introduction">
+      <MissionIntroSection />
+    </section>
 
-  <!-- ── 3. Journey Section ───────────────────────────────────
-       The core scroll-driven experience.
-       As the user scrolls, they "fall" deeper into the black
-       hole while story copy and visual effects are revealed.
-       -------------------------------------------------------- -->
-  <section
-  id="journey"
-  class="section section--journey"
-  aria-label="Black hole journey"
->
-      <!-- <JourneySection {scrollProgress} /> -->
+    <section id="journey" class="section section--journey" aria-label="Black hole journey"></section>
 
-
-    <!-- ── 4. Satellite Section ─────────────────────────────────
-         Interactive 3D viewer of the Nebula Xplorer satellite.
-         Users can click on individual components (solar panels,
-         AOCS, comms antenna, etc.) to open info panels.
-         -------------------------------------------------------- -->
     <section class="section section--satellite" aria-label="Interactive satellite viewer" id="satellite">
       <div class="satellite-content">
         <SatellietScrol />
       </div>
     </section>
 
-
-    <!-- ── 6. Footer Section ────────────────────────────────────
-         Credits, mission links, and social / contact info.
-         -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer" id="contact">
-    <footer class="section section--footer" aria-label="Site footer">
-      <!-- <FooterSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--footer">
-        <p class="placeholder__label">[ FOOTER ]</p>
-        <p class="placeholder__hint">Credits and links go here</p>
-      </div>
+      <Footer />
     </footer>
   {/if}
-
 </main>
 
-<!-- ============================================================
-     Styles — mobile first
-     Base styles target mobile (< 480px).
-     Tablet overrides at min-width: 480px.
-     Desktop overrides at min-width: 1024px.
-     Scoped to this component — child components manage their own.
-     ============================================================ -->
 <style>
-  /* ── CSS custom properties (design tokens) ───────────────── */
   :global(:root) {
-    --color-void:        #000000;   /* deep space black          */
-    --color-space:       #05020f;   /* near-black with blue hint */
-    --color-nebula:      #1a0533;   /* deep purple               */
-    --color-glow-purple: #8060FF;  /* primary neon accent       */
-    --color-glow-blue:   #00d4ff;   /* secondary neon accent     */
-    --color-text:        #e8e0f5;   /* off-white body text       */
-    --color-text-muted:  #6b5e8a;   /* dimmed / secondary text   */
+    --color-void: #000000;
+    --color-space: #05020f;
+    --color-nebula: #1a0533;
+    --color-glow-purple: #8060ff;
+    --color-glow-blue: #00d4ff;
+    --color-text: #e8e0f5;
+    --color-text-muted: #6b5e8a;
 
-    --font-display: 'Courier New', 'Courier', monospace; /* terminal feel */
-    --font-body:    'Courier New', 'Courier', monospace;
+    --font-display: 'Courier New', 'Courier', monospace;
+    --font-body: 'Courier New', 'Courier', monospace;
 
     --transition-smooth: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* ── Global resets ───────────────────────────────────────── */
   :global(*, *::before, *::after) {
     box-sizing: border-box;
-    margin:     0;
-    padding:    0;
+    margin: 0;
+    padding: 0;
   }
 
   :global(html) {
     scroll-behavior: smooth;
-    background:      var(--color-void);
+    background: var(--color-void);
   }
 
   :global(body) {
-    background:  var(--color-void);
-    color:       var(--color-text);
+    background: var(--color-void);
+    color: var(--color-text);
     font-family: var(--font-body);
-    overflow-x:  hidden;
+    overflow-x: hidden;
   }
 
-  /* ── Page wrapper ────────────────────────────────────────── */
   .page {
-    position:   relative;
-    width:      100%;
+    position: relative;
+    width: 100%;
     min-height: 100vh;
   }
 
-  /* ── Section base ────────────────────────────────────────── */
   .section {
     position: relative;
-    width:    100%;
+    width: 100%;
   }
 
   .section-divider {
-  width: 100%;
-  height: 2px;
-  position: relative;
-  z-index: 10;
+    width: 100%;
+    height: 2px;
+    position: relative;
+    z-index: 10;
 
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(128, 96, 255, 0.4) 20%,
-    #8060FF 50%,
-    rgba(128, 96, 255, 0.4) 80%,
-    transparent 100%
-  );
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(128, 96, 255, 0.4) 20%,
+      #8060ff 50%,
+      rgba(128, 96, 255, 0.4) 80%,
+      transparent 100%
+    );
 
-  box-shadow:
-    0 0 10px rgba(128, 96, 255, 0.5),
-    0 0 30px rgba(128, 96, 255, 0.3);
-}
+    box-shadow:
+      0 0 10px rgba(128, 96, 255, 0.5),
+      0 0 30px rgba(128, 96, 255, 0.3);
+  }
 
-  /* ── Boot section ────────────────────────────────────────────
-     z-index must stay BELOW the navbar (z-index: 100 in Navbar.svelte).
-     Matching the navbar at 100 broke hit-testing: the overlay and nav stack
-     ambiguously, so clicks (e.g. Skip) could miss the button.
-  ── */
   .section--boot {
-    position:        fixed;
-    inset:           0;
-    z-index:         50;
-    background:      var(--color-void);
-    display:         flex;
-    align-items:     center;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: var(--color-void);
+    display: flex;
+    align-items: center;
     justify-content: center;
-    pointer-events:  auto;
+    pointer-events: auto;
   }
 
-  /* ── Hero — full viewport, offset below fixed navbar ─────── */
   .section--hero {
-    min-height:      100vh;
-    display:         flex;
-    align-items:     center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding-top:     90px; /* matches --nav-height in Navbar.svelte */
-  }
-
-  /* ── Journey — tall section for scroll-driven animations ─── */
-  .section--journey {
-    min-height:  400vh;
     padding-top: 90px;
   }
 
-  /* ── Satellite viewer ────────────────────────────────────── */
+  .section--journey {
+    min-height: 400vh;
+    padding-top: 90px;
+  }
+
   .section--satellite {
-    min-height:      100vh;
-    padding-top:     90px;
-    position:        relative;
-    /* SatellietScrol uses @container page for desktop width */
-    container-type:  inline-size;
-    container-name:  page;
+    min-height: 100vh;
+    padding-top: 90px;
+    position: relative;
+    container-type: inline-size;
+    container-name: page;
   }
 
   .satellite-content {
@@ -326,101 +224,90 @@
     }
   }
 
-  /* ── Mission info ────────────────────────────────────────── */
   .section--mission {
-    min-height:  100vh;
+    min-height: 100vh;
     padding-top: 90px;
   }
 
   .section--mission-scroll {
-  position: relative;
-  min-height: auto;
-  background:
-    radial-gradient(circle at top center, rgba(128, 96, 255, 0.08), transparent 40%),
-    linear-gradient(180deg, #04040e 0%, #060612 100%);
-}
+    position: relative;
+    min-height: auto;
+    background:
+      radial-gradient(circle at top center, rgba(128, 96, 255, 0.08), transparent 40%),
+      linear-gradient(180deg, #04040e 0%, #060612 100%);
+  }
 
-  /* ── Footer ──────────────────────────────────────────────── */
   .section--footer {
     min-height: 0;
     overflow-x: clip;
   }
 
-  /* ════════════════════════════════════════════════════════════
-     PLACEHOLDER STYLES (dev-only visual guides)
-     Mobile first — smallest values as the base.
-  ════════════════════════════════════════════════════════════ */
   .placeholder {
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap:             0.75rem;
-    width:           100%;
-    min-height:      inherit;
-    padding:         2rem 1rem;   /* compact on mobile */
+    gap: 0.75rem;
+    width: 100%;
+    min-height: inherit;
+    padding: 2rem 1rem;
     border: 1px dashed rgba(128, 96, 255, 0.3);
-    text-align:      center;
+    text-align: center;
   }
 
-  /* Smaller text on mobile */
   .placeholder__label {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-glow-purple);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(128, 96, 255, 0.28);
-}
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-glow-purple);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(128, 96, 255, 0.28);
+  }
 
   .placeholder__hint {
     font-size: 0.75rem;
-    color:     var(--color-text-muted);
+    color: var(--color-text-muted);
   }
 
   .placeholder__meta {
-    font-size:   0.7rem;
-    color:       var(--color-glow-blue);
+    font-size: 0.7rem;
+    color: var(--color-glow-blue);
     font-family: monospace;
   }
 
- .placeholder__skip {
-  margin-top: 1rem;
-  padding: 0.6rem 1.4rem;
+  .placeholder__skip {
+    margin-top: 1rem;
+    padding: 0.6rem 1.4rem;
 
-  background: rgba(128, 96, 255, 0.08);
-  border: 1px solid #8060FF;
-  color: #8060FF;
+    background: rgba(128, 96, 255, 0.08);
+    border: 1px solid #8060ff;
+    color: #8060ff;
 
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    cursor: pointer;
 
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 
-  box-shadow:
-    0 0 10px rgba(128, 96, 255, 0.4),
-    0 0 20px rgba(128, 96, 255, 0.2);
-}
+    box-shadow:
+      0 0 10px rgba(128, 96, 255, 0.4),
+      0 0 20px rgba(128, 96, 255, 0.2);
+  }
 
-.placeholder__skip:hover {
-  background: #8060FF;
-  color: #000;
+  .placeholder__skip:hover {
+    background: #8060ff;
+    color: #000;
 
-  box-shadow:
-    0 0 20px rgba(128, 96, 255, 0.8),
-    0 0 40px rgba(128, 96, 255, 0.4);
-}
+    box-shadow:
+      0 0 20px rgba(128, 96, 255, 0.8),
+      0 0 40px rgba(128, 96, 255, 0.4);
+  }
 
-.placeholder__skip:focus-visible {
-  outline: 2px solid #8060FF;
-  outline-offset: 4px;
-}
+  .placeholder__skip:focus-visible {
+    outline: 2px solid #8060ff;
+    outline-offset: 4px;
+  }
 
-  /* ════════════════════════════════════════════════════════════
-     TABLET — min-width: 480px
-     More breathing room, slightly larger text.
-  ════════════════════════════════════════════════════════════ */
   @media (min-width: 480px) {
     .placeholder {
       padding: 3rem 1.5rem;
@@ -440,14 +327,10 @@
 
     .placeholder__skip {
       font-size: 0.85rem;
-      padding:   0.5rem 1.5rem;
+      padding: 0.5rem 1.5rem;
     }
   }
 
-  /* ════════════════════════════════════════════════════════════
-     DESKTOP — min-width: 1024px
-     Full sizes, more padding.
-  ════════════════════════════════════════════════════════════ */
   @media (min-width: 1024px) {
     .placeholder {
       padding: 4rem 2rem;
@@ -467,10 +350,7 @@
 
     .placeholder__skip {
       font-size: 0.875rem;
-      padding:   0.6rem 2rem;
+      padding: 0.6rem 2rem;
     }
   }
 </style>
-<footer class="section section--footer" aria-label="Site footer">
-  <Footer />
-</footer>
