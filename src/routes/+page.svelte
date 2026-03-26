@@ -194,7 +194,6 @@
   }
 
   .section--journey {
-    min-height: 400vh;
     padding-top: 90px;
   }
 
