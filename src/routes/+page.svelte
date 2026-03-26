@@ -6,6 +6,7 @@
   import Footer from '$lib/components/Footer.svelte';
   import Loading from '$lib/components/Loading.svelte';
   import SatellietScrol from '$lib/components/SatellietScrol.svelte';
+  import Navbar from '$lib/components/Navbar.svelte';
 
   let bootComplete = $state(false);
   let showLoading = $state(true);
@@ -53,7 +54,6 @@
     };
   }
 </script>
-
 <svelte:head>
   <title>Nebula Xplorer — Journey into the Black Hole</title>
   <meta
@@ -88,6 +88,7 @@
   {/if}
 
   {#if bootComplete}
+    <Navbar />
     <div class="section-divider" aria-hidden="true"></div>
 
     <section class="section section--mission-intro" aria-label="Mission introduction">

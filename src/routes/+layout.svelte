@@ -1,6 +1,5 @@
 <script>
   import '$lib/assets/style/styleguide.css';
-  import Navbar from '$lib/components/Navbar.svelte';
   import StarbackBackground from '$lib/components/StarbackBackground.svelte';
   import CursorTrail from '$lib/components/CursorTrail.svelte';
 
@@ -17,7 +16,6 @@
 </svelte:head>
 
 <StarbackBackground />
-<Navbar />
 <CursorTrail />
 
 <div class="app-surface">
