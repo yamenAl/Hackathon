@@ -432,6 +432,3 @@
     }
   }
 </style>
-<footer class="section section--footer" aria-label="Site footer">
-  <Footer />
-</footer>
