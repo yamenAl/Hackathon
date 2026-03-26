@@ -10,9 +10,10 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 999;
   display: grid;
   place-items: center;
+  pointer-events: none;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(4px);
 }
@@ -29,7 +30,7 @@
   height: var(--orbit-size);
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 50%;
-  animation: orbit-spin 3.2s linear infinite;
+  animation: orbit-spin 3.5s linear infinite;
 }
 
 .satellite {

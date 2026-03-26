@@ -5,16 +5,18 @@
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
-  import Footer from '$lib/components/Footer.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
   // import FooterSection    from '$lib/components/FooterSection.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import Loading from '$lib/components/Loading.svelte';
 
   // ── Page state ──
 
   /** Controls whether the boot sequence has finished */
   let bootComplete = $state(false);
+  let showLoading = $state(true);
 
   /** Tracks how far the user has scrolled (0–1) across the full page */
   let scrollProgress = $state(0);
@@ -33,9 +35,15 @@
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    const loadingTimer = window.setTimeout(() => {
+      showLoading = false;
+    }, 3000);
 
     // Clean up the listener when the component is destroyed
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.clearTimeout(loadingTimer);
+    };
   });
 
   /**
@@ -77,6 +85,9 @@
        Hidden once `bootComplete` flips to true.
        --------------------------------------------------------- -->
   {#if !bootComplete}
+    {#if showLoading}
+      <Loading />
+    {/if}
     <section class="section section--boot" aria-label="Mission boot sequence">
       <!-- <BootSequence on:complete={onBootComplete} /> -->
 
@@ -148,11 +159,16 @@
     </section>
 
     <!-- ── 6. Footer Section ────────────────────────────────────
-         Footer component with animation.
-         Replaces the placeholder now that Footer is built.
+         Credits, mission links, and social / contact info.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer">
-      <Footer />
+      <!-- <FooterSection /> -->
+
+      <!-- PLACEHOLDER -->
+      <div class="placeholder placeholder--footer">
+        <p class="placeholder__label">[ FOOTER ]</p>
+        <p class="placeholder__hint">Credits and links go here</p>
+      </div>
     </footer>
   {/if}
 
@@ -235,7 +251,7 @@
     display:         flex;
     align-items:     center;
     justify-content: center;
-    padding-top:     0px; /* matches --nav-height in Navbar.svelte */
+    padding-top:     90px; /* matches --nav-height in Navbar.svelte */
   }
 
   /* ── Journey — tall section for scroll-driven animations ─── */
@@ -371,3 +387,6 @@
     }
   }
 </style>
+<footer class="section section--footer" aria-label="Site footer">
+  <Footer />
+</footer>
