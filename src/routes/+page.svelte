@@ -5,7 +5,10 @@
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
-  import Footer from '$lib/components/Footer.svelte';
+  import SatellietScrol   from '$lib/components/SatellietScrol.svelte';
+  import Footer           from '$lib/components/Footer.svelte';
+
+
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
@@ -43,8 +46,38 @@
    * Setting bootComplete = true unmounts the boot overlay
    * and reveals the main experience.
    */
-  function onBootComplete() {
+  /**
+   * Hero + video stay mounted under the boot overlay so `HTMLVideoElement.play()`
+   * can run in the same user-gesture turn as the Skip click (required on many browsers).
+   */
+  function enterExperience() {
+    const v = document.getElementById('blackhole-hero-video');
+    if (v instanceof HTMLVideoElement) {
+      v.muted = true;
+      void v.play().catch(() => {});
+    }
     bootComplete = true;
+  }
+
+  function onBootComplete() {
+    void enterExperience();
+  }
+
+  /**
+   * Direct DOM listener — avoids delegated `onclick` quirks and ensures the
+   * handler runs even when stacking / `display: contents` confuses hit-testing.
+   * @param {HTMLButtonElement} node
+   */
+  function bootSkipButton(node) {
+    const handler = () => {
+      void enterExperience();
+    };
+    node.addEventListener('click', handler);
+    return {
+      destroy() {
+        node.removeEventListener('click', handler);
+      }
+    };
   }
 </script>
 
@@ -71,11 +104,12 @@
   aria-label="Nebula Xplorer interactive mission experience"
 >
 
-  <!-- ── 1. Boot Sequence overlay ──────────────────────────────
-       Shown first; sits BELOW the navbar (z-index: 50) so the
-       navbar remains visible during the boot animation.
-       Hidden once `bootComplete` flips to true.
-       --------------------------------------------------------- -->
+  <!-- Hero + video: always mounted first so the element exists when Skip runs play() -->
+  <section class="section section--hero" aria-label="Mission hero">
+    <HeroSection {scrollProgress} experienceActive={bootComplete} />
+  </section>
+
+  <!-- Boot overlay on top of hero until Skip (z-index: 50, below navbar) -->
   {#if !bootComplete}
     <section class="section section--boot" aria-label="Mission boot sequence">
       <!-- <BootSequence on:complete={onBootComplete} /> -->
@@ -84,73 +118,38 @@
       <div class="placeholder placeholder--boot">
         <p class="placeholder__label">[ BOOT SEQUENCE ]</p>
         <p class="placeholder__hint">BootSequence component goes here</p>
-        <button class="placeholder__skip" onclick={onBootComplete}>
+        <button type="button" class="placeholder__skip" use:bootSkipButton>
           Skip → Enter Experience
         </button>
       </div>
     </section>
   {/if}
 
-  <!-- ── 2. Hero Section ───────────────────────────────────────
-       Full-viewport black hole hero with a scroll-to-begin CTA.
-       Visible immediately after boot completes.
-       --------------------------------------------------------- -->
-  {#if bootComplete}
-    <section class="section section--hero" aria-label="Mission hero">
-  <HeroSection {scrollProgress} />
-</section>
-
-    <!-- ── 3. Journey Section ───────────────────────────────────
+  <!-- ── 3. Journey Section ───────────────────────────────────
          The core scroll-driven experience.
          As the user scrolls, they "fall" deeper into the black
          hole while story copy and visual effects are revealed.
          -------------------------------------------------------- -->
-    <section class="section section--journey" aria-label="Black hole journey">
-      <!-- <JourneySection {scrollProgress} /> -->
+  {#if bootComplete}
 
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--journey">
-        <p class="placeholder__label">[ JOURNEY SECTION ]</p>
-        <p class="placeholder__hint">Scroll-driven black hole storytelling goes here</p>
-        <p class="placeholder__meta">scrollProgress: {(scrollProgress * 100).toFixed(1)}%</p>
-      </div>
-    </section>
 
     <!-- ── 4. Satellite Section ─────────────────────────────────
          Interactive 3D viewer of the Nebula Xplorer satellite.
          Users can click on individual components (solar panels,
          AOCS, comms antenna, etc.) to open info panels.
          -------------------------------------------------------- -->
-    <section class="section section--satellite" aria-label="Interactive satellite viewer">
-      <!-- <SatelliteSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--satellite">
-        <p class="placeholder__label">[ SATELLITE SECTION ]</p>
-        <p class="placeholder__hint">3D satellite viewer with clickable components goes here</p>
+    <section class="section section--satellite" aria-label="Interactive satellite viewer" id="satellite">
+      <div class="satellite-content">
+        <SatellietScrol />
       </div>
     </section>
 
-    <!-- ── 5. Mission Section ───────────────────────────────────
-         Static + animated mission information:
-         - Key stats (altitude, duration, orbit type …)
-         - Onboard systems overview (AOCS, power, comms …)
-         - Mission goal explanation cards
-         -------------------------------------------------------- -->
-    <section class="section section--mission" aria-label="Mission information">
-      <!-- <MissionSection /> -->
-
-      <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--mission">
-        <p class="placeholder__label">[ MISSION SECTION ]</p>
-        <p class="placeholder__hint">Stats, systems, and mission cards go here</p>
-      </div>
-    </section>
 
     <!-- ── 6. Footer Section ────────────────────────────────────
          Footer component with animation.
          Replaces the placeholder now that Footer is built.
          -------------------------------------------------------- -->
+    <footer class="section section--footer" aria-label="Site footer" id="contact">
     <footer class="section section--footer" aria-label="Site footer">
       <Footer />
     </footer>
@@ -215,18 +214,19 @@
   }
 
   /* ── Boot section ────────────────────────────────────────────
-     z-index: 50 keeps the boot overlay BELOW the navbar
-     (navbar uses z-index: 100) so the menu stays visible
-     during the boot animation.
+     z-index must stay BELOW the navbar (z-index: 100 in Navbar.svelte).
+     Matching the navbar at 100 broke hit-testing: the overlay and nav stack
+     ambiguously, so clicks (e.g. Skip) could miss the button.
   ── */
   .section--boot {
     position:        fixed;
     inset:           0;
-    z-index:         100;
+    z-index:         50;
     background:      var(--color-void);
     display:         flex;
     align-items:     center;
     justify-content: center;
+    pointer-events:  auto;
   }
 
   /* ── Hero — full viewport, offset below fixed navbar ─────── */
@@ -246,8 +246,31 @@
 
   /* ── Satellite viewer ────────────────────────────────────── */
   .section--satellite {
-    min-height:  100vh;
-    padding-top: 90px;
+    min-height:      100vh;
+    padding-top:     90px;
+    position:        relative;
+    /* SatellietScrol uses @container page for desktop width */
+    container-type:  inline-size;
+    container-name:  page;
+  }
+
+  .satellite-content {
+    max-width: min(var(--layout-content-max, 72rem), 100vw - 2rem);
+    margin-inline: auto;
+    padding-inline: var(--spacing-sm, 1rem);
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 480px) {
+    .satellite-content {
+      padding-inline: var(--spacing-md, 1.25rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .satellite-content {
+      padding-inline: 0;
+    }
   }
 
   /* ── Mission info ────────────────────────────────────────── */
@@ -256,9 +279,10 @@
     padding-top: 90px;
   }
 
-  /* ── Footer ──────────────────────────────────────────────── */
+  /* ── Footer (hands scroll scene needs tall scroll range; don’t cap height) ── */
   .section--footer {
-    min-height: 20vh;
+    min-height: 0;
+    overflow-x: clip;
   }
 
   /* ════════════════════════════════════════════════════════════
