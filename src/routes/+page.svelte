@@ -1,6 +1,14 @@
 <script>
   import { onMount } from 'svelte';
 
+  // ── Component imports (to be created in subsequent stories) ──
+  // import BootSequence     from '$lib/components/BootSequence.svelte';
+  import HeroSection      from '$lib/components/HeroSection.svelte';
+  import SatellietScrol   from '$lib/components/SatellietScrol.svelte';
+  // import JourneySection   from '$lib/components/JourneySection.svelte';
+  // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
+  // import MissionSection   from '$lib/components/MissionSection.svelte';
+  // import FooterSection    from '$lib/components/FooterSection.svelte';
   import HeroSection from '$lib/components/HeroSection.svelte';
   import MissionIntroSection from '$lib/components/MissionIntroSection.svelte';
   import Footer from '$lib/components/Footer.svelte';
@@ -12,6 +20,7 @@
   let showLoading = $state(true);
   let scrollProgress = $state(0);
 
+  /** Pause hero ambience when scrolled past the video section; resume when scrolling back. */
   /** Pause hero ambience when scrolled past the hero; resume when scrolling back. */
   function syncHeroAudio() {
     const a = document.getElementById('blackhole-hero-audio');
@@ -31,6 +40,7 @@
     }
   }
 
+  // ── Lifecycle ──
   onMount(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -69,6 +79,10 @@
     }
     bootComplete = true;
     queueMicrotask(() => syncHeroAudio());
+  }
+
+  function onBootComplete() {
+    void enterExperience();
   }
 
   /**
@@ -135,6 +149,10 @@
     </section>
 
     <footer class="section section--footer" aria-label="Site footer" id="contact">
+      <!-- <FooterSection /> -->
+
+      <!-- PLACEHOLDER -->
+   
       <Footer />
     </footer>
   {/if}
