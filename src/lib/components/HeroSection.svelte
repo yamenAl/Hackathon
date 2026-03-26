@@ -71,6 +71,16 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     <!-- Mobile video — standaard voor nu -->
     <source src="/videos/blackhole-mobile.mp4" type="video/mp4" />
   </video>
+
+  <!-- Ambient sound — started from +page enterExperience() (same gesture as video.play) -->
+  <audio
+    id="blackhole-hero-audio"
+    class="hero__audio"
+    src="/audio/blackhole-sound.mp3"
+    loop
+    preload="auto"
+    aria-hidden="true"
+  ></audio>
 </div>
  
   <!-- ── Star field background ─────────────────────────────────
@@ -181,6 +191,19 @@ const glowOpacity = $derived(Math.max(0.2, 1 - heroProgress * 1.5));
     height:     100%;
     object-fit: cover;
     object-position: center center;
+  }
+
+  /* No controls — keep out of layout; avoid display:none (can block playback in some browsers) */
+  .hero__audio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
  
   /* ── Accretion disk — outer ring ─────────────────────────────

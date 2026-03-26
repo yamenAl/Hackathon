@@ -57,9 +57,14 @@
    */
   function enterExperience() {
     const v = document.getElementById('blackhole-hero-video');
+    const a = document.getElementById('blackhole-hero-audio');
     if (v instanceof HTMLVideoElement) {
       v.muted = true;
       void v.play().catch(() => {});
+    }
+    if (a instanceof HTMLAudioElement) {
+      a.currentTime = 0;
+      void a.play().catch(() => {});
     }
     bootComplete = true;
   }
@@ -133,11 +138,6 @@
     </section>
   {/if}
 
-  <!-- ── 3. Journey Section ───────────────────────────────────
-         The core scroll-driven experience.
-         As the user scrolls, they "fall" deeper into the black
-         hole while story copy and visual effects are revealed.
-         -------------------------------------------------------- -->
   {#if bootComplete}
 
 
@@ -157,6 +157,7 @@
          Credits, mission links, and social / contact info.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer" id="contact">
+<<<<<<< Updated upstream
     <footer class="section section--footer" aria-label="Site footer">
       <!-- <FooterSection /> -->
 
@@ -165,6 +166,9 @@
         <p class="placeholder__label">[ FOOTER ]</p>
         <p class="placeholder__hint">Credits and links go here</p>
       </div>
+=======
+      <Footer />
+>>>>>>> Stashed changes
     </footer>
   {/if}
 
