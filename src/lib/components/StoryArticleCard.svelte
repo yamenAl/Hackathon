@@ -43,7 +43,10 @@
     aria-label="Story slides"
   >
     {#each articles as item, i (item.title + i)}
-      <article class="story-slide" aria-label="Slide {i + 1} of {articles.length}: {item.title}">
+      <article
+        class="story-slide"
+        aria-label="Slide {i + 1} of {articles.length}: {item.title}"
+      >
         <div class="glass-card">
           <h3 class="story-line">{item.title}</h3>
           {#each item.paragraphs as text}
@@ -102,7 +105,9 @@
     border-radius: var(--radius-md);
     background: var(--glass-fill-below);
     border: 1px solid var(--glass-border-strong);
-    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-inner-highlight);
+    box-shadow:
+      var(--glass-shadow),
+      inset 0 1px 0 var(--glass-inner-highlight);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     overflow: auto;
@@ -111,6 +116,7 @@
   .story-line {
     margin: 0;
     max-width: 100%;
+    color: var(--primary-purple-200);
   }
 
   .story-line + .story-line {
@@ -121,13 +127,12 @@
     font-family: var(--display-font);
     font-size: 0.95rem;
     line-height: 1.35;
-    color: var(--text-on-dark-heading);
   }
 
   .story-slide p.story-line {
     font-size: 0.8125rem;
     line-height: 1.45;
-    color: var(--text-on-dark-secondary);
+    color: #ffffff;
   }
 
   @media (prefers-reduced-motion: reduce) {
