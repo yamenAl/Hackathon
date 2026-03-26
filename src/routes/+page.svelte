@@ -7,6 +7,8 @@
   import HeroSection      from '$lib/components/HeroSection.svelte';
   import SatellietScrol   from '$lib/components/SatellietScrol.svelte';
   import Footer           from '$lib/components/Footer.svelte';
+
+
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
@@ -144,9 +146,11 @@
 
 
     <!-- ── 6. Footer Section ────────────────────────────────────
-         Credits, mission links, and social / contact info.
+         Footer component with animation.
+         Replaces the placeholder now that Footer is built.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer" id="contact">
+    <footer class="section section--footer" aria-label="Site footer">
       <Footer />
     </footer>
   {/if}
@@ -231,7 +235,7 @@
     display:         flex;
     align-items:     center;
     justify-content: center;
-    padding-top:     90px; /* matches --nav-height in Navbar.svelte */
+    padding-top:     0px; /* matches --nav-height in Navbar.svelte */
   }
 
   /* ── Journey — tall section for scroll-driven animations ─── */
