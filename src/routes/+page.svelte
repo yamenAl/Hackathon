@@ -123,8 +123,7 @@
     <Navbar />
     <div class="section-divider" aria-hidden="true"></div>
 
-    <section class="section section--mission-intro" aria-label="Mission introduction">
-      <MissionIntroSection />
+    <section id="mission" class="section section--mission-intro" aria-label="Mission introduction">      <MissionIntroSection />
     </section>
 
     <section id="journey" class="section section--journey" aria-label="Black hole journey"></section>
