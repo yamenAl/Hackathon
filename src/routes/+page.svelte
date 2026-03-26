@@ -5,6 +5,7 @@
   // ── Component imports (to be created in subsequent stories) ──
   // import BootSequence     from '$lib/components/BootSequence.svelte';
   import HeroSection      from '$lib/components/HeroSection.svelte';
+  import SatellietScrol   from '$lib/components/SatellietScrol.svelte';
   // import JourneySection   from '$lib/components/JourneySection.svelte';
   // import SatelliteSection from '$lib/components/SatelliteSection.svelte';
   // import MissionSection   from '$lib/components/MissionSection.svelte';
@@ -157,18 +158,11 @@
          Credits, mission links, and social / contact info.
          -------------------------------------------------------- -->
     <footer class="section section--footer" aria-label="Site footer" id="contact">
-<<<<<<< Updated upstream
-    <footer class="section section--footer" aria-label="Site footer">
       <!-- <FooterSection /> -->
 
       <!-- PLACEHOLDER -->
-      <div class="placeholder placeholder--footer">
-        <p class="placeholder__label">[ FOOTER ]</p>
-        <p class="placeholder__hint">Credits and links go here</p>
-      </div>
-=======
+   
       <Footer />
->>>>>>> Stashed changes
     </footer>
   {/if}
 

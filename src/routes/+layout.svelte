@@ -18,36 +18,21 @@
   />
 </svelte:head>
 
+<!--
+  No <main> wrapper here — +page.svelte manages its own layout.
+  The boot sequence needs position: fixed with no padding offset.
+-->
 <StarbackBackground />
 <!-- Navbar appears on every page because it lives in the root layout -->
 <Navbar />
 <CursorTrail />
 {@render children()}
 
-<!--
-  No <main> wrapper here — +page.svelte manages its own layout.
-  The boot sequence needs position: fixed with no padding offset.
--->
 <style>
   /* ── Global resets ────────────────────────────────────── */
   :global(*, *::before, *::after) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-
-  <!--
-    No <main> wrapper here — +page.svelte manages its own layout.
-    The boot sequence needs position: fixed with no padding offset.
-  -->
-
-</div>
-
-<style>
-  .app-surface {
-    position: relative;
-    z-index: 1;
-    /* Full-height surface so fixed children (boot overlay) stay in a predictable hit-test stack */
-    min-height: 100dvh;
   }
 </style>
