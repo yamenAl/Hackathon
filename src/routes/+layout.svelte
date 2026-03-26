@@ -1,6 +1,7 @@
 <script>
   import '$lib/assets/style/styleguide.css';
   import Navbar from "$lib/components/Navbar.svelte";
+  import StarbackBackground from "$lib/components/StarbackBackground.svelte";
   import CursorTrail from '$lib/components/CursorTrail.svelte';
 
   // Svelte 5 runes syntax — replaces the old `export let` slot pattern
@@ -17,6 +18,7 @@
   />
 </svelte:head>
 
+<StarbackBackground />
 <!-- Navbar appears on every page because it lives in the root layout -->
 <Navbar />
 <CursorTrail />
@@ -30,15 +32,18 @@
     padding: 0;
   }
 
-  :global(html) {
-    /* Smooth scroll for anchor links like #mission, #satellite */
-    scroll-behavior: smooth;
-  }
+  <!--
+    No <main> wrapper here — +page.svelte manages its own layout.
+    The boot sequence needs position: fixed with no padding offset.
+  -->
+  {@render children()}
+</div>
 
-  :global(body) {
-    background-color: #04040e;
-    color: #dde4f0;
-    font-family: 'Audiowide', sans-serif;
-    overflow-x: hidden;
+<style>
+  .app-surface {
+    position: relative;
+    z-index: 1;
+    /* Full-height surface so fixed children (boot overlay) stay in a predictable hit-test stack */
+    min-height: 100dvh;
   }
 </style>
